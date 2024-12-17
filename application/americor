@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Americor\Presentation\Cli\CreateClientCli;
+use Americor\Presentation\Cli\MakeCreditDecisionCli;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$command = $argv[1] ?? null;
+$jsonData = $argv[2] ?? null;
+
+if ($command === 'create-client' && $jsonData) {
+    // Создаем экземпляр команды и вызываем метод
+    $clientCreationCommand = new CreateClientCli;
+    $clientCreationCommand->run($jsonData);
+}
+
+if ($command === 'make-credit-decision' && $jsonData) {
+    // Создаем экземпляр команды и вызываем метод
+    $clientCreationCommand = new MakeCreditDecisionCli;
+    $clientCreationCommand->run($jsonData);
+}

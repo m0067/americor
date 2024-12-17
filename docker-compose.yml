@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+
+  americor_mariadb:
+    container_name: americor_mariadb
+    restart: always
+    image: mariadb:10.6
+    working_dir: /opt/sqldump
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "10591:3306"
+    networks:
+      americor:
+        aliases:
+          - americor_mariadb
+
+  americor_php:
+    user: dev:dev
+    container_name: americor_php
+    build: ./docker_config/php
+    restart: always
+    volumes:
+      - ./application:/var/www/americor
+      - ./docker_config/php/www2.conf:/usr/local/etc/php-fpm.d/www2.conf
+    working_dir: /var/www/americor
+    ports:
+      - "10592:9000"
+    networks:
+      americor:
+        aliases:
+          - americor_php
+
+networks:
+  americor:
